@@ -1,0 +1,14 @@
+{
+  "name": "Video Play back controls",
+  "version": "0.1",
+  "description": "Speed up, slow down, skip around",
+  "permissions": ["activeTab"],
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle",
+      "js": ["index.js"]
+    }
+  ]
+}
