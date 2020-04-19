@@ -1,4 +1,3 @@
-console.log("start")
 let currentVideo, timeout;
 const timerDefaultLength = 1000;
 const videoPlayBackToastId = "video-playback-toast";
@@ -29,7 +28,7 @@ let skipAmount = 10, incrementAmount = 0.1;
     }
   });
 
-const videos = Array.from(document.getElementsByTagName("video"));
+
 function setCurrentVideo(video) {
   if (
     !currentVideo ||
@@ -51,25 +50,43 @@ function setCurrentVideo(video) {
     currentVideo.parentElement.appendChild(videoPBToast);
   }
 }
-if (videos && videos.length) {
-  for (const [index, video] of videos.entries()) {
-    // set a data attribute so we can tell if the currentVideo is the same
-    video.setAttribute("data-video-id", index + 1);
-    // set the first video as the currentVideo
-    if (!index) {
-      setCurrentVideo(video);
-    }
-    video.addEventListener("play", function () {
-      setCurrentVideo(video);
-    });
-  }
-  document.addEventListener("keydown", handleKeyDown);
-  const head = document.getElementsByTagName("HEAD")[0];
-  const stylesheet = document.createElement("style");
-  stylesheet.innerHTML = styles;
-  head.appendChild(stylesheet);
-}
 
+function setVideos() {
+  const videos = Array.from(document.getElementsByTagName("video"));
+  if (videos && videos.length) {
+    for (const [index, video] of videos.entries()) {
+      // set a data attribute so we can tell if the currentVideo is the same
+      video.setAttribute("data-video-id", index + 1);
+      // set the first video as the currentVideo
+      if (!index) {
+        setCurrentVideo(video);
+      }
+      video.addEventListener("play", function () {
+        setCurrentVideo(video);
+      });
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    const head = document.getElementsByTagName("HEAD")[0];
+    const stylesheet = document.createElement("style");
+    stylesheet.innerHTML = styles;
+    head.appendChild(stylesheet);
+  }
+}
+setVideos()
+chrome.runtime.onMessage.addListener(data => {
+  if (data.action === "pageChange") {
+    setVideos()
+  }
+});
+
+// let pageUrl = window.location.href
+
+// setInterval(function() {
+//   if(pageUrl !== window.location.href) {
+//     setVideos()
+//     pageUrl = window.location.href
+//   }
+// }, 1000);
 function closeToast(toast) {
   toast.classList.remove("active");
 }

@@ -2,7 +2,7 @@
   "name": "Video Play back controls",
   "version": "0.1",
   "description": "Speed up, slow down, skip around",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "webNavigation"],
   "manifest_version": 2,
   "content_scripts": [
     {
@@ -11,6 +11,10 @@
       "js": ["index.js"]
     }
   ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "options_page": "options/options.html",
   "icons": {
     "16": "icons/play-16.png",
