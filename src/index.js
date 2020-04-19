@@ -79,20 +79,11 @@ chrome.runtime.onMessage.addListener(data => {
   }
 });
 
-// let pageUrl = window.location.href
-
-// setInterval(function() {
-//   if(pageUrl !== window.location.href) {
-//     setVideos()
-//     pageUrl = window.location.href
-//   }
-// }, 1000);
 function closeToast(toast) {
   toast.classList.remove("active");
 }
 
-function openToast() {
-  const playBackRate = currentVideo.playbackRate;
+function openToast(text) {
   const toast = document.getElementById(videoPlayBackToastId);
   const toastIsShowing = toast.classList.contains("active");
   if (toastIsShowing) {
@@ -100,27 +91,43 @@ function openToast() {
   } else {
     toast.classList.add("active");
   }
-  toast.innerHTML = `${Number(playBackRate * 100).toFixed(0)}%`;
+  toast.innerHTML = text;
   timeout = setTimeout(() => closeToast(toast), timerDefaultLength);
+}
+
+function formatTimeStamp(timeInSeconds) {
+  const num = Number(timeInSeconds)
+  const minutes = Math.floor(num / 60)
+  const seconds = num - minutes * 60;
+  let secondsString = seconds.toFixed(0).toString()
+  if(secondsString.length === 1) {
+    secondsString = "0" + secondsString
+  }
+  return `${minutes}:${secondsString}`
 }
 
 function handleKeyDown(e) {
   if (!currentVideo) return null;
-  let showToast = true
+  let showToast = true, text;
   switch (e.code) {
     case "KeyD":
+      text = `${Number((currentVideo.playbackRate + incrementAmount) * 100).toFixed(0)}%`
       currentVideo.playbackRate = currentVideo.playbackRate + incrementAmount;
       break;
     case "KeyS":
+      text = `${Number((currentVideo.playbackRate - incrementAmount) * 100).toFixed(0)}%`
       currentVideo.playbackRate = currentVideo.playbackRate - incrementAmount;
       break;
     case "KeyR":
+      text = "100%"
       currentVideo.playbackRate = 1;
       break;
     case "KeyX":
+      text = formatTimeStamp(currentVideo.currentTime + skipAmount);
       currentVideo.currentTime = currentVideo.currentTime + skipAmount;
       break;
     case "KeyZ":
+      text = formatTimeStamp(currentVideo.currentTime - skipAmount);
       currentVideo.currentTime = currentVideo.currentTime - skipAmount;
       break;
     default:
@@ -128,6 +135,6 @@ function handleKeyDown(e) {
       break;
   }
   if(showToast) {
-    openToast();
+    openToast(text);
   }
 }
