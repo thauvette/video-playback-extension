@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video Playback options</title>
+    <link rel="stylesheet" type="text/css" href="./options.css">
+  </head>
+  <body>
+    <h1>Video Playback Settings</h1>
+    <div class="form-section">
+      <label>
+        <span>Percent to increase/decrease speed</span>
+        <input type="number" min="1" max="100" id="speed-selection-input" />
+      </label>
+    </div>
+    <div class="form-section">
+      <label>
+        <span>Seconds to jump</span>
+        <input type="number" min="1" max="60" id="skip-rate-input" />
+      </label>
+    </div>
+    <div class="form-section">
+      <button id="save-playback-options">Save</button>
+    </div>
+    <script src="./options.js"></script>
+  </body>
+</html>
