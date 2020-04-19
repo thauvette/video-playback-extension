@@ -1,3 +1,4 @@
+console.log("start")
 let currentVideo, timeout;
 const timerDefaultLength = 1000;
 const videoPlayBackToastId = "video-playback-toast";
@@ -88,6 +89,7 @@ function openToast() {
 
 function handleKeyDown(e) {
   if (!currentVideo) return null;
+  let showToast = true
   switch (e.code) {
     case "KeyD":
       currentVideo.playbackRate = currentVideo.playbackRate + incrementAmount;
@@ -105,7 +107,10 @@ function handleKeyDown(e) {
       currentVideo.currentTime = currentVideo.currentTime - skipAmount;
       break;
     default:
+      showToast = false
       break;
   }
-  openToast();
+  if(showToast) {
+    openToast();
+  }
 }

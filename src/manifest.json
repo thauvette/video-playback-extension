@@ -11,5 +11,10 @@
       "js": ["index.js"]
     }
   ],
-  "options_page": "options/options.html"
+  "options_page": "options/options.html",
+  "icons": {
+    "16": "icons/play-16.png",
+    "48": "icons/play-48.png",
+    "128": "icons/play-128.png"
+  }
 }

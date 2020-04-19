@@ -17,3 +17,5 @@ Simple video playback extension for Chromium Browsers
 
 ### Options 
 Once installed you can click the icon for the extension and select options
+
+Icon made by [bqlqn](https://www.flaticon.com/authors/bqlqn) from [www.flaticon.com](https://www.flaticon.com/)
